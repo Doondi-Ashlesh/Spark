@@ -7,12 +7,6 @@ The goal of this task was to compute the distribution of friend counts in the Li
 Each record represents a user and their list of friends, and the objective was to determine how many users have 0, 1, 2, … up to N friends.
 
 ---
-
-Implementation
-
-
----
-
 Spark Implementation
 - Language: Scala (Apache Spark)
 - Logic:
@@ -20,8 +14,6 @@ Spark Implementation
   - Maps each user to their friend count.
   - Uses reduceByKey() to aggregate.
   - Saves output as text file.
-
-
 ---
 
 Performance Comparison:
