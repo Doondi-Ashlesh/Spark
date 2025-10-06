@@ -1,0 +1,69 @@
+dtg95-hw2-problem1:
+-------------------
+Friend Count Distribution – Performance Comparison
+
+Objective
+The goal of this task was to compute the distribution of friend counts in the LiveJournal social network dataset.
+Each record represents a user and their list of friends, and the objective was to determine how many users have 0, 1, 2, … up to N friends.
+
+---
+
+Implementation
+
+
+---
+
+Spark Implementation
+- Language: Scala (Apache Spark)
+- Logic:
+  - Reads the dataset as an RDD.
+  - Maps each user to their friend count.
+  - Uses reduceByKey() to aggregate.
+  - Saves output as text file.
+
+
+---
+
+Performance Comparison:
+-----------------------
+| Framework | Execution Time (s) | Data Processed | Observations |
+|------------|--------------------|----------------|---------------|
+| Hadoop MapReduce | ~1.93 s | 49,995 records | Slightly faster due to simpler job scheduling for this small dataset. |
+| Apache Spark | ~3.04 s | 49,995 records | Slightly slower in standalone mode due to job startup overhead. |
+
+
+*** Hadoop mapReduce Implementation:
+------------------------------------
+Execution Time:
+Based on Hadoop job logs:
+- Start time: 12:34:22,451
+- End time: 12:34:24,382
+- Total execution time ≈ 1.93 seconds
+
+*** Spark Implementation:
+-------------------------
+Execution Time:
+Printed from Spark console:
+- Execution time = 3.044107869 seconds
+
+
+---
+
+Justification of Observed Differences:
+--------------------------------------
+1. Dataset Size:
+   - The dataset is relatively small (~50K records).
+   - Spark’s startup overhead (initializing context, job DAG, and executors) is more noticeable here.
+   - MapReduce, being optimized for batch jobs, completes faster for such small inputs.
+
+2. Execution Model:
+   - MapReduce writes intermediate data to disk between the Map and Reduce phases.
+   - Spark performs in-memory computations, which becomes advantageous for larger datasets or iterative tasks, but not for small one-shot computations.
+
+---
+
+Conclusion:
+-----------
+For this single-pass, small-scale computation, Hadoop MapReduce outperformed Spark slightly.
+
+However, Spark’s advantages would become evident for larger datasets or workloads requiring multiple passes over the data (e.g., PageRank, iterative graph algorithms, or machine learning tasks).
